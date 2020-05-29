@@ -1,7 +1,7 @@
 # ClusterDNS
 
-DNS is a built-in Kubernetes service launched automatically using the addon manager cluster add-on<br>
-CoreDNS is a general-purpose authoritative DNS server that can serve as cluster DNS; kube-dns is the legacy one; CoreDNS supports the features of kube-dns and more.
+DNS is a built-in Kubernetes service launched automatically using the addon manager cluster add-on.<br>
+CoreDNS is a general-purpose authoritative DNS server that can serve as cluster DNS; kube-dns is the legacy one; CoreDNS supports the features of kube-dns and more(details to be completed https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/).
 
 ## CoreDNS is responsible for resolving DNS query inside a cluster
 CoreDNS is a service serving DNS with its static clusterIP and port 53:
