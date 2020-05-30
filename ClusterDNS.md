@@ -69,7 +69,7 @@ coredns-58cc8c89f4-wcw8c   1/1     Running   1          10d
 ```
 ## 4. How CoreDNS handles DNS queries
 ### 4.1 What records a CoreDNS have
-#### A/AAAA Record
+#### 4.1.1 A/AAAA Record
 (below taken from https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/)
 ##### Each service inside a cluster is assigned a DNS name
 * Normal Services are assigned a DNS A or AAAA record
@@ -79,8 +79,8 @@ my-svc.my-namespace.svc.cluster-domain.example. This resolves to the set of IPs 
 ##### Pod is assigned a DNS name
 * by default, its hostname is the Pod’s `metadata.name` value
 * to specify, use `hostname` and `subdomain` fields.
-#### SRV records
-#### PTR records
+#### 4.1.2 SRV records
+#### 4.1.3 PTR records
 ### 4.2 CoreDNS `Corefile` configuration
 ```
 # kubectl get cm coredns -n kube-system -oyaml
@@ -121,7 +121,7 @@ forward: Any queries that are not within the cluster domain of Kubernetes will b
 (taken from https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/)
 ### 4.5 `/etc/resolv.conf` investigation in CoreDNS Corefile
 `/etc/resolv.conf` in coredns pods is same from node DNS config. <br>
-By default, kubelet’s `--resolv-conf flag` is set to `/etc/resolv.conf`(please refer to 2.2 kubelet configuration). Add it passes the value to CoreDNS Pods.(a guess from below experiment) <br>
+By default, kubelet’s `--resolv-conf` flag is set to `/etc/resolv.conf`(please refer to 2.2 kubelet configuration). Add it passes the value to CoreDNS Pods.(a guess from below experiment) <br>
 Why CoredNS Pods get same /etc/resolv.conf with node still needs confirm<br>
 ```
 # docker ps |grep coredns
@@ -167,3 +167,6 @@ If a Pod’s dnsPolicy is set to “default”, it inherits the name resolution 
 * ClusterFirst
 A Pod uses cluster DNS aka CoreDNS first, if reslove fails (aka an external hostname query), it uses default upstream DNS settings inherited from node (as determined by kubelet - node's /etc/resolv.conf by default) or other extra stub-domain and upstream DNS servers configured (https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/, https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/#effects-on-pods) 
 
+some summaries:<br>
+kubelet by default inherited from node DNS settings with `--resolv-conf` flag set to `/etc/resolv.conf`. But we can change to others.<br>
+If kubelet a default value, CoreDNS by default uses kubelet value to set its /etc/resolv.conf and Corefile forward. But we can change to others in Corefile.
