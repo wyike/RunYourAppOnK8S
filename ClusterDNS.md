@@ -137,7 +137,7 @@ nameserver 192.168.111.1
 search nimbus-tb.eng.vmware.com. eng.vmware.com
 (the content in the pause container is same with node's /etc/resolv.conf)
 ```
-## DNS queries policy from a Pod
+## 5. DNS queries policy from a Pod
 Kubernetes source code:
 ```
 const (
